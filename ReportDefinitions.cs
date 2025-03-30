@@ -11,18 +11,18 @@ using Microsoft.Azure.Functions.Worker;
 
 namespace BusinessIntelligenceSolution
 {
-    public class Search
+    public class ReportDefinitions
     {
         private readonly ILogger _logger;
 
-        public Search(ILogger<Search> logger)
+        public ReportDefinitions(ILogger<ReportDefinitions> logger)
         {
             _logger = logger;
         }
 
         private HttpRequest _req;
         private NameValueCollection nvc = new NameValueCollection();
-        [Function("search")]
+        [Function("reportdefinitions")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]
             HttpRequest req)
         {
