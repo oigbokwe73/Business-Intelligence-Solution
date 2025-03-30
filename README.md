@@ -26,7 +26,7 @@ graph TD
   API --> SB[Azure Service Bus]
   SB --> Ingest[Azure Function - Ingestor]
   Ingest --> Storage[Azure Blob Storage]
-  Ingest --> NoSQL[Azure Cosmos DB (NoSQL)]
+  Ingest --> NoSQL[Azure Cosmos DB NoSQL]
   Ingest --> SQL[Azure SQL Database]
 
   SQL --> PowerBI[Power BI Embedded]
