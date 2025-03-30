@@ -153,5 +153,3 @@ CREATE TABLE IngestionLog (
 - Use **Power BI Aggregations** for report optimization.
 
 ---
-
-Would you like me to generate a **Power BI schema**, **API logic**, or the **Terraform/Bicep templates** for provisioning this architecture?
