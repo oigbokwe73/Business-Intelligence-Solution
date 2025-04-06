@@ -369,7 +369,7 @@ END;
 |A1557D3EB8074E8892D24BED7FD7E25A.json| Update users information |
 |168A3A61A4D4409198B7BBF245F0BC17.json| search for user informarion |
 |7C7A1460B321413BB1B4B4B77B689CBD.json| Create entry in table for new reporting data
-|C9B49B6157994BC88C907851BF464B60.json| **Service Bus Trigger for No SQL DB** | Receive JSON payload and insert into NO SQL DB|
+|C9B49B6157994BC88C907851BF464B60.json| Read/Search for reports|
 |43EFE991E8614CFB9EDECF1B0FDED37E.json| **Blob Trigger** Send parsed/sharded file  to Send to Service Bus|
 |43EFE991E8614CFB9EDECF1B0FDED37B.json| **Search Resullt from NO SQLDB** |
 |43EFE991E8614CFB9EDECF1B0FDED37G.json| **Search SQL DB. Return resultset** |
