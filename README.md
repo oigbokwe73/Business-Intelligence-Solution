@@ -370,13 +370,16 @@ END;
 |168A3A61A4D4409198B7BBF245F0BC17.json| search for user informarion |
 |7C7A1460B321413BB1B4B4B77B689CBD.json| Create entry in table for new reporting data
 |C9B49B6157994BC88C907851BF464B60.json| Read/Search for reports|
-|43EFE991E8614CFB9EDECF1B0FDED37E.json| **Blob Trigger** Send parsed/sharded file  to Send to Service Bus|
-|43EFE991E8614CFB9EDECF1B0FDED37B.json| **Search Resullt from NO SQLDB** |
-|43EFE991E8614CFB9EDECF1B0FDED37G.json| **Search SQL DB. Return resultset** |
-|3FB620B0E0FD4E8F93C9E4D839D00E1E.json| **Copy File from SFTP into the pickup folder** |
-|3FB620B0E0FD4E8F93C9E4D839D00E1F.json| **Create a new Record in NoSQL Database** |
-|CC244934898F46789734A9437B6F76CA.json| Encode Payload Request |
-|6B427917E36A4DA281D57F9A64AD9D55.json| Get reports from DB  |
+|20A592F5134F4FB897CEDF1A4C0BB5D6.json| Update reporting data|
+|D3F1868EC8604A91A9D65CF303F63B1E.json| Delete repporting  data |
+|269438C2D78745AA8E12DC145D569D28.json| Create entry for Report Definitions|
+|778CE302BD2D4E57AA2DBBE9365B8474.json| Serach or Read Report definition(s)|
+|BCD46D76A5DE4941AE323D59D4D6D7A0.json| Update Reports Definition |
+|F77690907F8E47DCBC3121F82D64FD60.json| Delete Report Defimition |
+|2A5C690627BA4353BF18B71AFF6C4FA4.json| Write/Create ingestion logs  |
+|D00DD33D349E46CDB7E501DD12A30CCC.json| Read/Search ingestion logs  |
+|5B4CBC045DBD40F28D8F98529889D85F.json| Update ingestion log  |
+|038208A11444408A82243D22B2A4E165.json| Delete entries from ingestion log  |
 
 ---
 
