@@ -328,8 +328,6 @@ END;
 
 ---
 
-Let me know if you'd like me to generate these in a SQL script file or include **error handling**, **logging**, or **output parameters** as well!
----
 
 ### ✅ **Azure Cosmos DB Example (NoSQL JSON Format)**
 
