@@ -107,6 +107,228 @@ CREATE TABLE IngestionLog (
 );
 ```
 
+Sure! Below are **SQL stored procedures** for **CRUD operations (Create, Read, Update, Delete)** for each of the four tables:
+
+---
+
+## 🔹 1. `Users` Table – Stored Procedures
+
+### ➕ Create
+```sql
+CREATE PROCEDURE sp_CreateUser
+    @Username NVARCHAR(100),
+    @Email NVARCHAR(255),
+    @Role NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO Users (Username, Email, Role, CreatedAt)
+    VALUES (@Username, @Email, @Role, GETDATE());
+END;
+```
+
+### 📥 Read
+```sql
+CREATE PROCEDURE sp_GetUser
+    @UserID INT
+AS
+BEGIN
+    SELECT * FROM Users WHERE UserID = @UserID;
+END;
+```
+
+### ✏️ Update
+```sql
+CREATE PROCEDURE sp_UpdateUser
+    @UserID INT,
+    @Username NVARCHAR(100),
+    @Email NVARCHAR(255),
+    @Role NVARCHAR(50)
+AS
+BEGIN
+    UPDATE Users
+    SET Username = @Username,
+        Email = @Email,
+        Role = @Role
+    WHERE UserID = @UserID;
+END;
+```
+
+### ❌ Delete
+```sql
+CREATE PROCEDURE sp_DeleteUser
+    @UserID INT
+AS
+BEGIN
+    DELETE FROM Users WHERE UserID = @UserID;
+END;
+```
+
+---
+
+## 🔹 2. `ReportDefinitions` Table – Stored Procedures
+
+### ➕ Create
+```sql
+CREATE PROCEDURE sp_CreateReportDefinition
+    @UserID INT,
+    @ReportName NVARCHAR(255),
+    @Filters NVARCHAR(MAX)
+AS
+BEGIN
+    INSERT INTO ReportDefinitions (UserID, ReportName, Filters, CreatedAt)
+    VALUES (@UserID, @ReportName, @Filters, GETDATE());
+END;
+```
+
+### 📥 Read
+```sql
+CREATE PROCEDURE sp_GetReportDefinition
+    @ReportID INT
+AS
+BEGIN
+    SELECT * FROM ReportDefinitions WHERE ReportID = @ReportID;
+END;
+```
+
+### ✏️ Update
+```sql
+CREATE PROCEDURE sp_UpdateReportDefinition
+    @ReportID INT,
+    @ReportName NVARCHAR(255),
+    @Filters NVARCHAR(MAX)
+AS
+BEGIN
+    UPDATE ReportDefinitions
+    SET ReportName = @ReportName,
+        Filters = @Filters
+    WHERE ReportID = @ReportID;
+END;
+```
+
+### ❌ Delete
+```sql
+CREATE PROCEDURE sp_DeleteReportDefinition
+    @ReportID INT
+AS
+BEGIN
+    DELETE FROM ReportDefinitions WHERE ReportID = @ReportID;
+END;
+```
+
+---
+
+## 🔹 3. `ReportData` Table – Stored Procedures
+
+### ➕ Create
+```sql
+CREATE PROCEDURE sp_CreateReportData
+    @ReportID INT,
+    @RecordDate DATETIME,
+    @MetricName NVARCHAR(100),
+    @MetricValue FLOAT,
+    @SourceType NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO ReportData (ReportID, RecordDate, MetricName, MetricValue, SourceType)
+    VALUES (@ReportID, @RecordDate, @MetricName, @MetricValue, @SourceType);
+END;
+```
+
+### 📥 Read
+```sql
+CREATE PROCEDURE sp_GetReportDataByReportID
+    @ReportID INT
+AS
+BEGIN
+    SELECT * FROM ReportData WHERE ReportID = @ReportID;
+END;
+```
+
+### ✏️ Update
+```sql
+CREATE PROCEDURE sp_UpdateReportData
+    @ReportDataID BIGINT,
+    @MetricName NVARCHAR(100),
+    @MetricValue FLOAT,
+    @SourceType NVARCHAR(50)
+AS
+BEGIN
+    UPDATE ReportData
+    SET MetricName = @MetricName,
+        MetricValue = @MetricValue,
+        SourceType = @SourceType
+    WHERE ReportDataID = @ReportDataID;
+END;
+```
+
+### ❌ Delete
+```sql
+CREATE PROCEDURE sp_DeleteReportData
+    @ReportDataID BIGINT
+AS
+BEGIN
+    DELETE FROM ReportData WHERE ReportDataID = @ReportDataID;
+END;
+```
+
+---
+
+## 🔹 4. `IngestionLog` Table – Stored Procedures
+
+### ➕ Create
+```sql
+CREATE PROCEDURE sp_CreateIngestionLog
+    @SourceFile NVARCHAR(500),
+    @Status NVARCHAR(50),
+    @RecordsProcessed BIGINT,
+    @ProcessingTimeSeconds INT
+AS
+BEGIN
+    INSERT INTO IngestionLog (SourceFile, Status, RecordsProcessed, ProcessingTimeSeconds, Timestamp)
+    VALUES (@SourceFile, @Status, @RecordsProcessed, @ProcessingTimeSeconds, GETDATE());
+END;
+```
+
+### 📥 Read
+```sql
+CREATE PROCEDURE sp_GetIngestionLog
+    @IngestionID BIGINT
+AS
+BEGIN
+    SELECT * FROM IngestionLog WHERE IngestionID = @IngestionID;
+END;
+```
+
+### ✏️ Update
+```sql
+CREATE PROCEDURE sp_UpdateIngestionLog
+    @IngestionID BIGINT,
+    @Status NVARCHAR(50),
+    @RecordsProcessed BIGINT,
+    @ProcessingTimeSeconds INT
+AS
+BEGIN
+    UPDATE IngestionLog
+    SET Status = @Status,
+        RecordsProcessed = @RecordsProcessed,
+        ProcessingTimeSeconds = @ProcessingTimeSeconds
+    WHERE IngestionID = @IngestionID;
+END;
+```
+
+### ❌ Delete
+```sql
+CREATE PROCEDURE sp_DeleteIngestionLog
+    @IngestionID BIGINT
+AS
+BEGIN
+    DELETE FROM IngestionLog WHERE IngestionID = @IngestionID;
+END;
+```
+
+---
+
+Let me know if you'd like me to generate these in a SQL script file or include **error handling**, **logging**, or **output parameters** as well!
 ---
 
 ### ✅ **Azure Cosmos DB Example (NoSQL JSON Format)**
