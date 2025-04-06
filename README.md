@@ -107,7 +107,7 @@ CREATE TABLE IngestionLog (
 );
 ```
 
-Sure! Below are **SQL stored procedures** for **CRUD operations (Create, Read, Update, Delete)** for each of the four tables:
+Following are **SQL stored procedures** for **CRUD operations (Create, Read, Update, Delete)** for each of the four tables:
 
 ---
 
