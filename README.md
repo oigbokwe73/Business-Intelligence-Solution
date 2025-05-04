@@ -116,13 +116,23 @@ Following are **SQL stored procedures** for **CRUD operations (Create, Read, Upd
 ### ➕ Create
 ```sql
 CREATE PROCEDURE sp_CreateUser
+    @UserID UNIQUEIDENTIFIER = NULL,
     @Username NVARCHAR(100),
     @Email NVARCHAR(255),
     @Role NVARCHAR(50)
 AS
 BEGIN
-    INSERT INTO Users (Username, Email, Role, CreatedAt)
-    VALUES (@Username, @Email, @Role, GETDATE());
+    SET NOCOUNT ON;
+
+    -- If UserID is not provided, generate a new one
+    IF @UserID IS NULL
+        SET @UserID = NEWID();
+
+    INSERT INTO Users (UserID, Username, Email, Role, CreatedAt)
+    VALUES (@UserID, @Username, @Email, @Role, GETDATE());
+
+    -- Return the final UserID
+    SELECT @UserID AS CreatedUserID;
 END;
 ```
 
