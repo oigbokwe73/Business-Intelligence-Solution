@@ -48,7 +48,7 @@ namespace BusinessIntelligenceSolution
         {
             get
             {
-                return new ManagedOrchestratorService(nvc);
+                return new RemoteOrchrestratorService(nvc);
             }
         }
 
