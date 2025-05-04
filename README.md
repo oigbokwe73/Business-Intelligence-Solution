@@ -62,11 +62,11 @@ Here are the **Azure SQL DB tables** that support structured reporting.
 #### 1. `Users`
 ```sql
 CREATE TABLE Users (
-    UserID INT PRIMARY KEY,
-    Username NVARCHAR(100),
-    Email NVARCHAR(255),
+    UserID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    Username NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(255) NOT NULL,
     Role NVARCHAR(50),
-    CreatedAt DATETIME
+    CreatedAt DATETIME DEFAULT GETDATE()
 );
 ```
 
