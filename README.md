@@ -139,7 +139,7 @@ END;
 ### 📥 Read
 ```sql
 CREATE PROCEDURE sp_GetUser
-    @UserID INT
+    @UserID UNIQUEIDENTIFIER 
 AS
 BEGIN
     SELECT * FROM Users WHERE UserID = @UserID;
@@ -149,7 +149,7 @@ END;
 ### ✏️ Update
 ```sql
 CREATE PROCEDURE sp_UpdateUser
-    @UserID INT,
+    @UserID UNIQUEIDENTIFIER,
     @Username NVARCHAR(100),
     @Email NVARCHAR(255),
     @Role NVARCHAR(50)
