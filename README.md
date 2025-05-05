@@ -166,7 +166,7 @@ END;
 ### ❌ Delete
 ```sql
 CREATE PROCEDURE sp_DeleteUser
-    @UserID INT
+    @UserID UNIQUEIDENTIFIER
 AS
 BEGIN
     DELETE FROM Users WHERE UserID = @UserID;
@@ -180,7 +180,7 @@ END;
 ### ➕ Create
 ```sql
 CREATE PROCEDURE sp_CreateReportDefinition
-    @UserID INT,
+    @UserID UNIQUEIDENTIFIER,
     @ReportName NVARCHAR(255),
     @Filters NVARCHAR(MAX)
 AS
