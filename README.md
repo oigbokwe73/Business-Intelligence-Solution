@@ -74,7 +74,7 @@ CREATE TABLE Users (
 ```sql
 CREATE TABLE ReportDefinitions (
     ReportID INT PRIMARY KEY,
-    UserID INT,
+    UserID UNIQUEIDENTIFIER,
     ReportName NVARCHAR(255),
     Filters NVARCHAR(MAX), -- JSON of applied filters
     CreatedAt DATETIME,
