@@ -133,9 +133,6 @@ Following is some sample data .
 }
 ```
 
-```
-
-
 Following are **SQL stored procedures** for **CRUD operations (Create, Read, Update, Delete)** for each of the four tables:
 
 ---
