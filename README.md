@@ -114,19 +114,11 @@ Following is some sample data .
 
 #### 1. `Users`
 ```json
-### ✅ **Key SQL Tables**
-
-Here are the **Azure SQL DB tables** that support structured reporting.
-
-#### 1. `Users`
-```sql
-CREATE TABLE Users (
-    UserID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    Username NVARCHAR(100) NOT NULL,
-    Email NVARCHAR(255) NOT NULL,
-    Role NVARCHAR(50),
-    CreatedAt DATETIME DEFAULT GETDATE()
-);
+{
+  "Username": "john.doe",
+  "Email": "john.doe@example.com",
+  "Role": "Analyst"
+}
 ```
 #### 2. `Report Definitions`
 ```json
