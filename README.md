@@ -86,7 +86,7 @@ CREATE TABLE ReportDefinitions (
 ```sql
 CREATE TABLE ReportData (
     ReportDataID BIGINT PRIMARY KEY,
-    ReportID INT,
+    ReportID UNIQUEIDENTIFIER,
     RecordDate DATETIME,
     MetricName NVARCHAR(100),
     MetricValue FLOAT,
