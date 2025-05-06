@@ -73,7 +73,7 @@ CREATE TABLE Users (
 #### 2. `ReportDefinitions`
 ```sql
 CREATE TABLE ReportDefinitions (
-    ReportID INT PRIMARY KEY,
+    ReportID UNIQUEIDENTIFIER PRIMARY KEY,
     UserID UNIQUEIDENTIFIER,
     ReportName NVARCHAR(255),
     Filters NVARCHAR(MAX), -- JSON of applied filters
@@ -85,7 +85,7 @@ CREATE TABLE ReportDefinitions (
 #### 3. `ReportData`
 ```sql
 CREATE TABLE ReportData (
-    ReportDataID BIGINT PRIMARY KEY,
+    ReportDataID UNIQUEIDENTIFIER PRIMARY KEY,
     ReportID UNIQUEIDENTIFIER,
     RecordDate DATETIME,
     MetricName NVARCHAR(100),
@@ -98,7 +98,7 @@ CREATE TABLE ReportData (
 #### 4. `IngestionLog`
 ```sql
 CREATE TABLE IngestionLog (
-    IngestionID BIGINT PRIMARY KEY,
+    IngestionID UNIQUEIDENTIFIER PRIMARY KEY,
     SourceFile NVARCHAR(500),
     Status NVARCHAR(50),
     RecordsProcessed BIGINT,
