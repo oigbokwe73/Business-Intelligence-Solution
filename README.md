@@ -73,8 +73,8 @@ CREATE TABLE Users (
 #### 2. `ReportDefinitions`
 ```sql
 CREATE TABLE ReportDefinitions (
-    ReportID INT PRIMARY KEY,
-    UserID INT,
+    ReportID UNIQUEIDENTIFIER PRIMARY KEY,
+    UserID UNIQUEIDENTIFIER,
     ReportName NVARCHAR(255),
     Filters NVARCHAR(MAX), -- JSON of applied filters
     CreatedAt DATETIME,
@@ -85,8 +85,8 @@ CREATE TABLE ReportDefinitions (
 #### 3. `ReportData`
 ```sql
 CREATE TABLE ReportData (
-    ReportDataID BIGINT PRIMARY KEY,
-    ReportID INT,
+    ReportDataID UNIQUEIDENTIFIER PRIMARY KEY,
+    ReportID UNIQUEIDENTIFIER,
     RecordDate DATETIME,
     MetricName NVARCHAR(100),
     MetricValue FLOAT,
@@ -98,7 +98,7 @@ CREATE TABLE ReportData (
 #### 4. `IngestionLog`
 ```sql
 CREATE TABLE IngestionLog (
-    IngestionID BIGINT PRIMARY KEY,
+    IngestionID UNIQUEIDENTIFIER PRIMARY KEY,
     SourceFile NVARCHAR(500),
     Status NVARCHAR(50),
     RecordsProcessed BIGINT,
@@ -182,18 +182,24 @@ END;
 CREATE PROCEDURE sp_CreateReportDefinition
     @UserID UNIQUEIDENTIFIER,
     @ReportName NVARCHAR(255),
-    @Filters NVARCHAR(MAX)
+    @Filters NVARCHAR(MAX),
+	@ReportID UNIQUEIDENTIFIER = NULL
 AS
 BEGIN
-    INSERT INTO ReportDefinitions (UserID, ReportName, Filters, CreatedAt)
-    VALUES (@UserID, @ReportName, @Filters, GETDATE());
+SET NOCOUNT ON;
+
+    -- If UserID is not provided, generate a new one
+    IF @ReportID IS NULL SET @ReportID = NEWID();
+
+    INSERT INTO ReportDefinitions (ReportID,UserID, ReportName, Filters, CreatedAt)
+    VALUES (@ReportID, @UserID, @ReportName, @Filters, GETDATE());
 END;
 ```
 
 ### 📥 Read
 ```sql
 CREATE PROCEDURE sp_GetReportDefinition
-    @ReportID INT
+    @ReportID UNIQUEIDENTIFIER
 AS
 BEGIN
     SELECT * FROM ReportDefinitions WHERE ReportID = @ReportID;
@@ -203,7 +209,7 @@ END;
 ### ✏️ Update
 ```sql
 CREATE PROCEDURE sp_UpdateReportDefinition
-    @ReportID INT,
+    @ReportID UNIQUEIDENTIFIER,
     @ReportName NVARCHAR(255),
     @Filters NVARCHAR(MAX)
 AS
@@ -218,7 +224,7 @@ END;
 ### ❌ Delete
 ```sql
 CREATE PROCEDURE sp_DeleteReportDefinition
-    @ReportID INT
+    @ReportID UNIQUEIDENTIFIER
 AS
 BEGIN
     DELETE FROM ReportDefinitions WHERE ReportID = @ReportID;
@@ -232,7 +238,7 @@ END;
 ### ➕ Create
 ```sql
 CREATE PROCEDURE sp_CreateReportData
-    @ReportID INT,
+    @ReportID UNIQUEIDENTIFIER,
     @RecordDate DATETIME,
     @MetricName NVARCHAR(100),
     @MetricValue FLOAT,
@@ -247,7 +253,7 @@ END;
 ### 📥 Read
 ```sql
 CREATE PROCEDURE sp_GetReportDataByReportID
-    @ReportID INT
+    @ReportID UNIQUEIDENTIFIER
 AS
 BEGIN
     SELECT * FROM ReportData WHERE ReportID = @ReportID;
@@ -257,7 +263,7 @@ END;
 ### ✏️ Update
 ```sql
 CREATE PROCEDURE sp_UpdateReportData
-    @ReportDataID BIGINT,
+    @ReportDataID UNIQUEIDENTIFIER,
     @MetricName NVARCHAR(100),
     @MetricValue FLOAT,
     @SourceType NVARCHAR(50)
@@ -274,7 +280,7 @@ END;
 ### ❌ Delete
 ```sql
 CREATE PROCEDURE sp_DeleteReportData
-    @ReportDataID BIGINT
+    @ReportDataID UNIQUEIDENTIFIER
 AS
 BEGIN
     DELETE FROM ReportData WHERE ReportDataID = @ReportDataID;
