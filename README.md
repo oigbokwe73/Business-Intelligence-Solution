@@ -107,6 +107,32 @@ CREATE TABLE IngestionLog (
 );
 ```
 
+
+### ✅ **Sample JSON Data**
+
+Following is some sample data .
+
+#### 1. `Users`
+```json
+{
+  "Username": "john.doe",
+  "Email": "john.doe@example.com",
+  "Role": "Analyst"
+}
+```
+#### 2. `Report Definitions`
+```json
+{
+  "UserID": "fff22138-3add-41bd-be33-3baa53838ccf",
+  "ReportName": "Daily Engagement Summary",
+  "Filters": {
+    "DateRange": "Last 7 Days",
+    "Platform": ["Twitter", "Facebook"],
+    "Metrics": ["Likes", "Shares", "Comments"]
+  }
+}
+```
+
 Following are **SQL stored procedures** for **CRUD operations (Create, Read, Update, Delete)** for each of the four tables:
 
 ---
