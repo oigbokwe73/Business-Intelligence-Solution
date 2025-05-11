@@ -1,5 +1,5 @@
 ﻿{
-  "Id": "CopyFilesAndCreateBatchFiles",
+  "Id": "GetCandidateInformation",
   "LineOfBusinessProcessData": [
     {
       "Key": "object",
@@ -9,62 +9,54 @@
   "Type": "",
   "DataFlowProcess": [
     {
-      "Key": "FileShareCopyProcess",
-      "Type": "Xenhey.BPM.Core.Net8.Processes.FileShareCopyProcess",
+      "Key": "MessageBuilderProcess",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.MessageBuilderProcess",
       "Async": "false",
       "IsEnable": "true",
       "DataFlowProcessParameters": [
         {
-          "Key": "StorageAccount",
-          "Value": "AzureWebJobsStorage"
-        },
-        {
-          "Key": "DownloadFileFromShare",
-          "Value": "Yes"
-        },
-        {
-          "Key": "FileExtension",
-          "Value": ".csv"
-        },
-        {
-          "Key": "IncludeFolderName",
+          "Key": "QueryBuilder",
           "Value": "yes"
         },
         {
-          "Key": "FileShareName",
-          "Value": "training20250405"
+          "Key": "statement",
+          "Value": "sp_GetReportDataByReportID '@{ReportID}'"
         },
         {
-          "Key": "Container",
-          "Value": "pickup"
-        },
-        {
-          "Key": "FolderName",
-          "Value": "ForProcessing"
-        },
-        {
-          "Key": "ContentType",
-          "Value": "text/csv"
+          "Key": "filters",
+          "Value": "[{\"Key\": \"@{ReportID}\",\"Value\": \"ReportID \"}]"
         }
       ]
     },
     {
-      "Key": "FileShareCopyProcess",
-      "Type": "Xenhey.BPM.Core.Net8.Processes.FileShareCopyProcess",
+      "Key": "SerchforResultSet",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.ConnectToDBProcess",
       "Async": "false",
       "IsEnable": "true",
       "DataFlowProcessParameters": [
         {
-          "Key": "StorageAccount",
-          "Value": "AzureWebJobsStorage"
+          "Key": "ConnectToDatabaseJSONResultSet",
+          "Value": "yes"
         },
         {
-          "Key": "DeleteFileFromShare",
-          "Value": "Yes"
+          "Key": "connectionstring",
+          "Value": "DatabaseConnection"
         },
         {
-          "Key": "FileShareName",
-          "Value": "training20250405"
+          "Key": "SearchTerm",
+          "Value": "query"
+        },
+        {
+          "Key": "validatefornulls",
+          "Value": "yes"
+        },
+        {
+          "Key": "messageformat",
+          "Value": "application/json"
+        },
+        {
+          "Key": "FormatNotIndented",
+          "Value": "yes"
         }
       ]
     }

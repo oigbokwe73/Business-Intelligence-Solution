@@ -1,5 +1,5 @@
 ﻿{
-  "Id": "CopyFilesAndCreateBatchFiles",
+  "Id": "GetCandidateInformation",
   "LineOfBusinessProcessData": [
     {
       "Key": "object",
@@ -9,62 +9,74 @@
   "Type": "",
   "DataFlowProcess": [
     {
-      "Key": "FileShareCopyProcess",
-      "Type": "Xenhey.BPM.Core.Net8.Processes.FileShareCopyProcess",
+      "Key": "HeaderInfoProcess",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.HeaderInfoProcess",
       "Async": "false",
       "IsEnable": "true",
       "DataFlowProcessParameters": [
         {
-          "Key": "StorageAccount",
-          "Value": "AzureWebJobsStorage"
-        },
-        {
-          "Key": "DownloadFileFromShare",
-          "Value": "Yes"
-        },
-        {
-          "Key": "FileExtension",
-          "Value": ".csv"
-        },
-        {
-          "Key": "IncludeFolderName",
+          "Key": "AddTrackingHeaders",
           "Value": "yes"
         },
         {
-          "Key": "FileShareName",
-          "Value": "training20250405"
+          "Key": "TrackingId",
+          "Value": "yes"
         },
         {
-          "Key": "Container",
-          "Value": "pickup"
-        },
-        {
-          "Key": "FolderName",
-          "Value": "ForProcessing"
-        },
-        {
-          "Key": "ContentType",
-          "Value": "text/csv"
+          "Key": "PropertyName",
+          "Value": "UserID"
         }
       ]
     },
     {
-      "Key": "FileShareCopyProcess",
-      "Type": "Xenhey.BPM.Core.Net8.Processes.FileShareCopyProcess",
+      "Key": "MessageBuilderProcess",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.MessageBuilderProcess",
       "Async": "false",
       "IsEnable": "true",
       "DataFlowProcessParameters": [
         {
-          "Key": "StorageAccount",
-          "Value": "AzureWebJobsStorage"
+          "Key": "QueryBuilder",
+          "Value": "yes"
         },
         {
-          "Key": "DeleteFileFromShare",
-          "Value": "Yes"
+          "Key": "statement",
+          "Value": "sp_GetUser '@{UserID}'"
         },
         {
-          "Key": "FileShareName",
-          "Value": "training20250405"
+          "Key": "filters",
+          "Value": "[{\"Key\": \"@{UserID}\",\"Value\": \"UserID\"}]"
+        }
+      ]
+    },
+    {
+      "Key": "SerchforResultSet",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.ConnectToDBProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "ConnectToDatabaseJSONResultSet",
+          "Value": "yes"
+        },
+        {
+          "Key": "connectionstring",
+          "Value": "DatabaseConnection"
+        },
+        {
+          "Key": "SearchTerm",
+          "Value": "query"
+        },
+        {
+          "Key": "validatefornulls",
+          "Value": "yes"
+        },
+        {
+          "Key": "messageformat",
+          "Value": "application/json"
+        },
+        {
+          "Key": "FormatNotIndented",
+          "Value": "yes"
         }
       ]
     }

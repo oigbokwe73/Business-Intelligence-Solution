@@ -20,11 +20,11 @@
         },
         {
           "Key": "statement",
-          "Value": "sp_GetIngestionLog '@{IngestionID}'"
+          "Value": " sp_DeleteUser '@{UserID}'"
         },
         {
           "Key": "filters",
-          "Value": "[{\"Key\": \"@{IngestionID}\",\"Value\": \"IngestionID \"}]"
+          "Value": "[{\"Key\": \"@{UserID}\",\"Value\": \"UserID\"}]"
         }
       ]
     },

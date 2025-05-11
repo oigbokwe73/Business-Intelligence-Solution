@@ -1,5 +1,5 @@
 ﻿{
-  "Id": "CopyFilesAndCreateBatchFiles",
+  "Id": "GetCandidateInformation",
   "LineOfBusinessProcessData": [
     {
       "Key": "object",
@@ -9,62 +9,190 @@
   "Type": "",
   "DataFlowProcess": [
     {
-      "Key": "FileShareCopyProcess",
-      "Type": "Xenhey.BPM.Core.Net8.Processes.FileShareCopyProcess",
+      "Key": "AzureTableStorageProcess",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.AzureTableStorageProcess",
       "Async": "false",
       "IsEnable": "true",
       "DataFlowProcessParameters": [
+        {
+          "Key": "CreateRecordForAzureTable",
+          "Value": "yes"
+        },
         {
           "Key": "StorageAccount",
           "Value": "AzureWebJobsStorage"
         },
         {
-          "Key": "DownloadFileFromShare",
-          "Value": "Yes"
-        },
-        {
-          "Key": "FileExtension",
-          "Value": ".csv"
-        },
-        {
-          "Key": "IncludeFolderName",
-          "Value": "yes"
-        },
-        {
-          "Key": "FileShareName",
-          "Value": "training20250405"
-        },
-        {
-          "Key": "Container",
-          "Value": "pickup"
-        },
-        {
-          "Key": "FolderName",
-          "Value": "ForProcessing"
-        },
-        {
-          "Key": "ContentType",
-          "Value": "text/csv"
+          "Key": "TableName",
+          "Value": "training20250506"
         }
       ]
     },
     {
-      "Key": "FileShareCopyProcess",
-      "Type": "Xenhey.BPM.Core.Net8.Processes.FileShareCopyProcess",
+      "Key": "MessageBuilderProcess",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.MessageBuilderProcess",
       "Async": "false",
       "IsEnable": "true",
       "DataFlowProcessParameters": [
+        {
+          "Key": "QueryBuilderDynamic",
+          "Value": "yes"
+        },
+        {
+          "Key": "statement",
+          "Value": "RowKey eq '@{RowKey}'"
+        },
+        {
+          "Key": "filters",
+          "Value": "[{\"Key\": \"@{RowKey}\",\"Value\": \"RowKey\"}]"
+        }
+      ]
+    },
+    {
+      "Key": "Azure_Table_Storage",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.AzureTableStorageProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "SimpleTableSearch",
+          "Value": "yes"
+        },
+        {
+          "Key": "QueryField",
+          "Value": "query"
+        },
         {
           "Key": "StorageAccount",
           "Value": "AzureWebJobsStorage"
         },
         {
-          "Key": "DeleteFileFromShare",
-          "Value": "Yes"
+          "Key": "TableName",
+          "Value": "training20250506"
         },
         {
-          "Key": "FileShareName",
-          "Value": "training20250405"
+          "Key": "DefaultResult",
+          "Value": "No Records Found"
+        }
+      ]
+    },
+    {
+      "Key": "MessageBuilderProcess",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.MessageBuilderProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "ExtractObjectFromArrayObject",
+          "Value": "yes"
+        }
+      ]
+    },
+    {
+      "Key": "MessageBuilderProcess",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.MessageBuilderProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "StorePayloadInReponse",
+          "Value": "yes"
+        }
+      ]
+    },
+    {
+      "Key": "MessageBuilderProcess",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.MessageBuilderProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "QueryBuilder",
+          "Value": "yes"
+        },
+        {
+          "Key": "statement",
+          "Value": "sp_UpdateReportDefinition '@{ReportID}','@{ReportName}','@{Filters}'"
+        },
+        {
+          "Key": "filters",
+          "Value": "[{\"Key\": \"@{ReportID}\",\"Value\": \"ReportID\"},{\"Key\": \"@{ReportName}\",\"Value\": \"ReportName\"},{\"Key\": \"@{Filters}\",\"Value\": \"Filters\"}]"
+        }
+      ]
+    },
+    {
+      "Key": "SerchforResultSet",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.ConnectToDBProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "ConnectToDatabaseJSONResultSet",
+          "Value": "yes"
+        },
+        {
+          "Key": "connectionstring",
+          "Value": "DatabaseConnection"
+        },
+        {
+          "Key": "SearchTerm",
+          "Value": "query"
+        },
+        {
+          "Key": "validatefornulls",
+          "Value": "yes"
+        },
+        {
+          "Key": "messageformat",
+          "Value": "application/json"
+        },
+        {
+          "Key": "FormatNotIndented",
+          "Value": "yes"
+        }
+      ]
+    },
+    {
+      "Key": "MessageBuilderProcess",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.MessageBuilderProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "GetPayloadFromReponse",
+          "Value": "yes"
+        }
+      ]
+    },
+    {
+      "Key": "Azure_Table_Storage",
+      "Type": "Xenhey.BPM.Core.Net8.Processes.AzureTableStorageProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "DeleteRecordFromTableStore",
+          "Value": "yes"
+        },
+        {
+          "Key": "statement",
+          "Value": "UserID eq '@{UserID}'"
+        },
+        {
+          "Key": "filters",
+          "Value": "[{\"Key\": \"@{UserID}\",\"Value\": \"UserID\"}]"
+        },
+        {
+          "Key": "StorageAccount",
+          "Value": "AzureWebJobsStorage"
+        },
+        {
+          "Key": "TableName",
+          "Value": "training20250506"
+        },
+        {
+          "Key": "DefaultResult",
+          "Value": "No Records Found"
         }
       ]
     }
